@@ -397,6 +397,7 @@
                         || alignAttribute == NSLayoutAttributeLeading
                         || alignAttribute == NSLayoutAttributeTrailing
                         || alignAttribute == NSLayoutAttributeCenterX
+                        || alignAttribute == NSLayoutAttributeBaseline
                         || alignAttribute == NSLayoutAttributeCenterY);
     KeepParameterAssert(relatedView);
     KeepParameterAssert(name);
