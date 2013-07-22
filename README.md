@@ -128,6 +128,32 @@ See [`UIView+KeepLayout.h`][2] or [`KeepAttribute.h`][4] for more .
 
 
 
+## Removable Groups
+
+_Removable Groups_ is a way to remove multiple attributes (or their values) at once. With this you can quickly change one desired set of constraints (= layout) to another.
+
+```objc
+// Create removable group
+removableLayout = [KeepAttribute removableChanges:^{
+    self.view.keepWidth.min = KeepHigh(320); // Set minimum width limit.
+    self.view.keepVerticalInsets.equal = KeepRequired(0); // Vertically stretch to fit.
+}];
+// Group now contains all attributes that were changed in the block.
+
+[removableLayout remove];
+// self.view no longer has minimum width of 320 and is no longer stretched vertically.
+```
+
+You can also remove these manually using:
+
+```objc
+self.view.keepWidth.min = KeepNone; // Removes minimum width constraint.
+[self.view.keepWidth remove]; // Removes all constraints for width.
+```
+
+See [`KeepAttribute.h`][4] for details.
+
+
 ## Convenience Methods
 
 For the most used cases there are convenience methods. Nothing you could write yourself, but simplify your code and improve readability. Some of them:
@@ -185,6 +211,21 @@ These are instance methods and must be called on parent view of all affected sub
 See [`UIView+KeepLayout.h`][2] for more.
 
 
+## Debugging
+
+Keep Layout uses its own `NSLayoutConstraint` subclass that overrides `-debugDescription` method. Once you get error message **_`Unable to simultaneously satisfy constraints.`_**, you will see nicely readable description of every constraint you have created. Example:
+
+```objc
+"<KeepLayoutConstraint:0xc695560 left offset of <YourView 0xc682cf0> to <YourAnotherView 0xc681350> equal to 20 with required priority>",
+"<KeepLayoutConstraint:0xc695560 left offset of <YourView 0xc682cf0> to <YourAnotherView 0xc681350> equal to 50 with required priority>",
+```
+
+With this you can very easily find the wrong attribute and fix it.
+
+See [`KeepLayoutConstraint.h`][10] for details.
+
+---
+
 
 ## Implementation Details
 
@@ -206,7 +247,7 @@ See [`UIView+KeepLayout.m`][6] for details.
 
 
 ---
-_Version 1.0.0_
+_Version 1.1.0_
 
 MIT License, Copyright © 2013 Martin Kiss
 
@@ -222,6 +263,7 @@ MIT License, Copyright © 2013 Martin Kiss
 [3]: Sources/KeepTypes.h
 [4]: Sources/KeepAttribute.h
 [5]: Sources/NSArray+KeepLayout.h
+[10]: Sources/KeepLayoutConstraint.h
 
 [6]: Sources/UIView+KeepLayout.m
 [7]: Sources/KeepAttribute.m
