@@ -229,6 +229,8 @@
     [self.constraintView addConstraint:constraint];
     
     self.view.translatesAutoresizingMaskIntoConstraints = NO;
+    self.relatedView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.constraintView.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 
